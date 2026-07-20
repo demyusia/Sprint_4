@@ -1,4 +1,4 @@
-package PageObjects;
+package ru.praktikum.services.qa.scooter.pageobjects;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;

@@ -1,16 +1,14 @@
-import Driver.FactoryDriver;
-import PageObjects.MainPage;
-import PageObjects.OrderPage;
+import ru.praktikum.services.qa.scooter.driver.FactoryDriver;
+import ru.praktikum.services.qa.scooter.pageobjects.MainPage;
+import ru.praktikum.services.qa.scooter.pageobjects.OrderPage;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.praktikum.services.qa.scooter.util.TestUtil;
 
-import java.time.Duration;
 import java.util.List;
 
 public class MainPageTests {
@@ -21,8 +19,7 @@ public class MainPageTests {
     @Test
     public void accordionClickTest () {
         WebDriver driver = factoryDriver.getDriver();
-        MainPage mainPage = new MainPage(driver);
-        mainPage.openUrl();
+        MainPage mainPage = TestUtil.openMainPage(driver);
 
         List<WebElement> elements = mainPage.getElementsOfAccordion();
         for (WebElement element : elements) {
@@ -30,7 +27,6 @@ public class MainPageTests {
             WebElement button = mainPage.getAccordionQuestionButton(element);
             button.click();
             WebElement answer = mainPage.getAccordionAnswerPanel(element);
-            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(answer));
             Assert.assertTrue(answer.isDisplayed());
         }
     }
@@ -38,8 +34,7 @@ public class MainPageTests {
     @Test
     public void clickOnLogoScooterBringsToMainPageOfScooterTest() {
         WebDriver driver = factoryDriver.getDriver();
-        MainPage mainPage = new MainPage(driver);
-        mainPage.openUrl();
+        MainPage mainPage = TestUtil.openMainPage(driver);
 
         OrderPage orderPage = mainPage.goToOrderPageFromHeader();
         orderPage.clickOnLogoScooter();
@@ -51,8 +46,7 @@ public class MainPageTests {
     @Test
     public void clickOnLogoYandexBringsToMainPageOfYandexTest() {
         WebDriver driver = factoryDriver.getDriver();
-        MainPage mainPage = new MainPage(driver);
-        mainPage.openUrl();
+        MainPage mainPage = TestUtil.openMainPage(driver);
 
         mainPage.clickOnLogoYandex();
         Assert.assertTrue(driver.getPageSource().contains("yandex.ru"));

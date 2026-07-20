@@ -1,12 +1,14 @@
-import Driver.FactoryDriver;
-import PageObjects.MainPage;
-import PageObjects.OrderPage;
+import ru.praktikum.services.qa.scooter.driver.FactoryDriver;
+import ru.praktikum.services.qa.scooter.pageobjects.MainPage;
+import ru.praktikum.services.qa.scooter.pageobjects.OrderPage;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
+import ru.praktikum.services.qa.scooter.util.TestUtil;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
@@ -54,8 +56,7 @@ public class MakeOrderParametrizedTests {
     @Test
     public void makeOrderWithCorrectDataTest() {
         WebDriver driver = factoryDriver.getDriver();
-        MainPage mainPage = new MainPage(driver);
-        mainPage.openUrl();
+        MainPage mainPage = TestUtil.openMainPage(driver);
 
 
         OrderPage orderPage = mainPage.goToOrderPageFromHeader();           //проверяем кнопку Заказать в заголовке

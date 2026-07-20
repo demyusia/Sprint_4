@@ -1,10 +1,11 @@
-import Driver.FactoryDriver;
-import PageObjects.MainPage;
-import PageObjects.StatusPage;
+import ru.praktikum.services.qa.scooter.driver.FactoryDriver;
+import ru.praktikum.services.qa.scooter.pageobjects.MainPage;
+import ru.praktikum.services.qa.scooter.pageobjects.StatusPage;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import ru.praktikum.services.qa.scooter.util.TestUtil;
 
 public class OrderStatusTests {
 
@@ -14,8 +15,7 @@ public class OrderStatusTests {
     @Test
     public void fillInIncorrectOrderNumberShowsStatusPageWithMessageTest () {
         WebDriver driver = factoryDriver.getDriver();
-        MainPage mainPage = new MainPage(driver);
-        mainPage.openUrl();
+        MainPage mainPage = TestUtil.openMainPage(driver);
 
         mainPage.clickOnStatusButton();
         mainPage.fillInOrderNumber("2313543245");

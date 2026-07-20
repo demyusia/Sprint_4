@@ -1,4 +1,4 @@
-package PageObjects;
+package ru.praktikum.services.qa.scooter.pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -61,7 +61,9 @@ public class MainPage {
     }
 
     public WebElement getAccordionAnswerPanel(WebElement element) {
-        return element.findElement(accordionAnswerPanel);
+        WebElement newElement = element.findElement(accordionAnswerPanel);
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(newElement));
+        return newElement;
     }
 
     public OrderPage goToOrderPageFromHeader () {
@@ -100,5 +102,6 @@ public class MainPage {
         driver.findElement(goButton).click();
         return new StatusPage(driver);
     }
+
 
 }
