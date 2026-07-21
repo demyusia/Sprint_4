@@ -8,7 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
 
 public class MainPage {
 
@@ -39,31 +38,40 @@ public class MainPage {
     //кнопка Go
     private final By goButton = By.className("Header_Button__28dPO");
 
-    //выпадающий список вопросов о важном
-    private final By faqAccordion = By.xpath(".//div[@class='accordion']/*");
-
     //кнопка вопрос аккордиона
-    private final By accordionQuestionButton = By.className("accordion__button");
+    private final String accordionQuestionButton = ".//div[@class='accordion__item'][%s]//div[@class='accordion__button']";
 
     //панель с ответом аккордиона
-    private final By accordionAnswerPanel = By.className("accordion__panel");
+    private final String accordionAnswerPanel = ".//div[@class='accordion__item'][%s]//div[@class='accordion__panel']";
 
     public void openUrl() {
         driver.get("https://qa-scooter.praktikum-services.ru/");
     }
 
-    public List<WebElement> getElementsOfAccordion() {
-        return driver.findElements(faqAccordion);
+    public String getAccordionQuestionText(String elementNumber) {
+        String locator = String.format(accordionQuestionButton, elementNumber);
+        WebElement button = driver.findElement(By.xpath(locator));
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", button);
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.elementToBeClickable(button));
+        button.click();
+        return button.getText();
     }
 
-    public WebElement getAccordionQuestionButton(WebElement element) {
-        return element.findElement(accordionQuestionButton);
+    public WebElement getAccordionAnswerPanel(String elementNumber) {
+        String locator = String.format(accordionAnswerPanel, elementNumber);
+        WebElement answer = driver.findElement(By.xpath(locator));
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(answer));
+        return answer;
     }
 
-    public WebElement getAccordionAnswerPanel(WebElement element) {
-        WebElement newElement = element.findElement(accordionAnswerPanel);
-        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(newElement));
-        return newElement;
+    public boolean isAccordionPanelIsVisible(String elementNumber) {
+        WebElement answer = getAccordionAnswerPanel(elementNumber);
+        return answer.isDisplayed();
+    }
+
+    public String getAccordionAnswerPanelText(String elementNumber) {
+        WebElement answer = getAccordionAnswerPanel(elementNumber);
+        return answer.getText();
     }
 
     public OrderPage goToOrderPageFromHeader () {

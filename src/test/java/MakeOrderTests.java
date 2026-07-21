@@ -20,7 +20,6 @@ public class MakeOrderTests {
         OrderPage orderPage = mainPage.goToOrderPageFromHeader();
         String wrong = "wrong";
         orderPage.fillInInfoAboutYourselfWithData(wrong, wrong, wrong, wrong, wrong);
-        System.out.println("Ok");
 
         Assert.assertTrue(orderPage.isMessageWrongNameIsDisplayed());
         Assert.assertTrue(orderPage.isMessageWrongSurnameIsDisplayed());
